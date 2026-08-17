@@ -53,6 +53,10 @@ class LaravelUtilitiesServiceProvider extends ServiceProvider
         Blade::component('utilities::components.settings-panel', 'utilities::settings-panel');
 
         // Register Custom Blade Directives for Hook Engine
+        Blade::directive('getOption', function (string $key, mixed $default = null) {
+            return "<?php echo getOption($key, $default); ?>";
+        });
+
         Blade::directive('renderView', function (string $expression) {
             return "<?php echo renderView({$expression}); ?>";
         });
