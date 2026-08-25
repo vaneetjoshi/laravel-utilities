@@ -103,6 +103,8 @@ class SettingsManager
         if (! empty($bulkOptions)) {
             setManyOptions($bulkOptions);
         }
+
+        flushOptionCache();
     }
 
     /**

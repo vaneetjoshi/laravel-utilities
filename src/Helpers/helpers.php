@@ -13,6 +13,7 @@
 use Vaneetjoshi\LaravelUtilities\Services\FormattingService;
 use Vaneetjoshi\LaravelUtilities\Services\HookService;
 use Vaneetjoshi\LaravelUtilities\Services\OptionsService;
+use Vaneetjoshi\LaravelUtilities\Settings\Enums\InputType;
 use Vaneetjoshi\LaravelUtilities\Settings\SettingsRegistry;
 
 // =========================================================================
@@ -149,15 +150,20 @@ if (!function_exists('setting')) {
      */
     function setting(string $key, mixed $fallback = null): mixed
     {
+        $registry = app(SettingsRegistry::class);
+        
         // 1. Check the database (which utilizes our Tenant-Aware Cache)
         $dbValue = getOption($key);
         
-        if ($dbValue !== null) {
-            return $dbValue;
+        // 2. Resolve final value (fallback to Schema default if missing in DB)
+        $value = $dbValue !== null ? $dbValue : $registry->getDefault($key, $fallback);
+
+        // 3. Strictly cast checkboxes to booleans so you get true/false instead of "0"/"1"
+        if ($registry->getFieldType($key) === InputType::CHECKBOX->value) {
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
-        // 2. If missing in the DB, pull the default from the Request-Lifecycle Singleton
-        return app(SettingsRegistry::class)->getDefault($key, $fallback);
+        return $value;
     }
 }
 
