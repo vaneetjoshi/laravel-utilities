@@ -13,6 +13,7 @@ class WidgetDTO
     public ?string $icon = null;
     public ?string $color = null;
     public ?string $view = null;
+    public ?string $details = null;
     public int $order = 0;
     public bool $isDisabled = false;
     
@@ -59,6 +60,12 @@ class WidgetDTO
     public function view(string $viewPath): self
     {
         $this->view = $viewPath;
+        return $this;
+    }
+
+    public function details(string $details): self
+    {
+        $this->details = $details;
         return $this;
     }
 
