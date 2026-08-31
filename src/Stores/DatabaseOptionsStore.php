@@ -37,7 +37,7 @@ class DatabaseOptionsStore implements OptionsStoreInterface
             return config('tenancy.tenant_connection_name', 'mysql_tenant');
         }
 
-        return config('database.default', 'mysql');
+        return config('database.central.connection', 'central_database');
     }
 
     /**
