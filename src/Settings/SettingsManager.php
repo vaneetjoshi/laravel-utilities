@@ -48,6 +48,7 @@ class SettingsManager
     public static function datetime(string $name): Field { return (new Field($name))->type(InputType::DATETIME); }
     public static function keyValue(string $name): Field { return (new Field($name))->type(InputType::KEY_VALUE); }
     public static function select(string $name): SelectField { return new SelectField($name); }
+    public static function multiSelect(string $name): SelectField { return (new SelectField($name))->multiple(); }
     public static function number(string $name): NumberField { return new NumberField($name); }
     public static function file(string $name): FileField { return new FileField($name); }
     public static function image(string $name): FileField { return (new FileField($name))->type(InputType::IMAGE); }

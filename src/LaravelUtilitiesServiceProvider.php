@@ -96,15 +96,18 @@ class LaravelUtilitiesServiceProvider extends ServiceProvider
             }
         }
 
-        // Auto-discover and register all Host Application Hooks
-        $hooksDirectory = app_path('Hooks');
-        if (is_dir($hooksDirectory)) {
-            $hookFiles = glob($hooksDirectory . '/*.php');
-            if ($hookFiles !== false) {
-                foreach ($hookFiles as $file) {
-                    require_once $file;
+        $this->app->booted(function () {
+            // Auto-discover and register all Host Application Hooks
+            $hooksDirectory = app_path('Hooks');
+            if (is_dir($hooksDirectory)) {
+                $hookFiles = glob($hooksDirectory . '/*.php');
+                if ($hookFiles !== false) {
+                    foreach ($hookFiles as $file) {
+                        require_once $file;
+                    }
                 }
             }
-        }
+        });
+        
     }
 }
