@@ -95,7 +95,7 @@ class LaravelUtilitiesServiceProvider extends ServiceProvider
                 });
             }
         }
-        if ($this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             $this->app->booted(function () {
                 // Auto-discover and register all Host Application Hooks
                 $hooksDirectory = app_path('Hooks');
